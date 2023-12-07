@@ -3,40 +3,36 @@
 	<head>
 		<title></title>
 			<style>
-			
+
 				.swatch {
-					/* Remove this rule when you set your colors! */
-					background-color: red;
 					margin: 1px;
 					width: 100px;
 					height: 100px;
 				}
-			
-				main {
-					width: 600px;
-					margin: auto;
-				}
+
+
 			</style>
+	<link rel="stylesheet" href="styles.css">
+	<script src="./ticker-tape.js"></script>
+
 	</head>
 	<body>
 
 		<!-- Base Styles - Set the base styles for the page -->
 
+		<!-- navbar - Style the navbar -->
+		<header class="navbar">
+			<div class="nav-brand"><a href="#">Color.com</a></div>
+			<ul class="nav-links">
+				<li><a href="#about">About</a></li>
+				<li><a href="#popular">Popular</a></li>
+				<li><a href="#swatches">Swatches</a></li>
+				<li><a href="#cart">Order</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</header>
 		<main>
 
-			<!-- navbar - Style the navbar -->
-			<section id="nav">
-				<header>
-					<nav>
-						<a href="#">Color.com</a>
-						<a href="#about">About</a>
-						<a href="#popular">Popular</a>
-						<a href="#swatches">Swatches</a>
-						<a href="#cart">Order</a>
-						<a href="#contact">Contact</a>
-					</nav>
-				</header>
-			</section>
 
 			<!-- banner -->
 			<section id="banner">
@@ -54,7 +50,7 @@
 			</section>
 
 
-			
+
 			<!-- Section Color Cards - This section contains three cards Style these -->
 			<section id="popular">
 				<div class="card">
@@ -94,10 +90,10 @@
 				<ul id="items">
 					<!-- Items here -->
 				</ul>
-	
-				<div id="total">
+
+				<h5 id="total">
 					<!-- Total here -->
-				</div>
+				</h5>
 			</section>
 
 
@@ -110,7 +106,7 @@
 				<div>
 					<form>
 						<label>
-							name
+							Name
 							<input type="text">
 						</label>
 
@@ -124,62 +120,73 @@
 							<textarea></textarea>
 						</label>
 
-						<label>
-							Sign up for the newsletter
-							<input type="checkbox">
-						</label>
+						<div class="newsletter">
+							<div class="checkbox-group">
+								<input type="checkbox" id="newsletter-signup">
+								<label for="newsletter-signup">Sign up for the newsletter</label>
+							</div>
 
-						<label>
-							<input type="radio" name="user">
-							Artist
-						</label>
+							<div class="radio-group">
+								<input type="radio" id="artist" name="user">
+								<label for="artist">Artist</label>
+							</div>
 
-						<label>
-							<input type="radio" name="user">
-							Designer
-						</label>
+							<div class="radio-group">
+								<input type="radio" id="designer" name="user">
+								<label for="designer">Designer</label>
+							</div>
 
-						<label>
-							<input type="radio" name="user">
-							Enthusiast
-						</label>
+							<div class="radio-group">
+								<input type="radio" id="enthusiast" name="user">
+								<label for="enthusiast">Enthusiast</label>
+							</div>
+							</div>
+
 						<button>Submit</button>
 					</form>
 				</div>
 			</section>
 
 
-			<!-- Footer -->
-			<section id="footer">
-				<footer>
-					<ul>
-
-					</ul>
+</main>
+		<!-- Footer -->
+		<!-- <section id="footer"> -->
+		<footer>
+			<ul>
+				<li>Alex Rocha - ACS 3320 Final Assessment</li>
+				</ul>
 				</footer>
-			</section>
-
-		</main>
+		<!-- </section> -->
 
 		<script>
-			
 
-			// All 100 color swatches has a CSS custom property assigne to it. 
-			// You can use this color each swatch with a unique color. 
+
+			// All 100 color swatches has a CSS custom property assigne to it.
+			// You can use this color each swatch with a unique color.
 
 			// --color-sample-0 : red
 			// --color-sample-1 : green
 			// ...
 			// --color-sample-99 : blue
 
-			// make some swatches 
+																						// make some swatches
 			const swatchCount = 100
 			for (let i = 0; i < swatchCount; i += 1) {
 				const swatch = `
-				<div 
-					class="swatch add-to-cart color-${i}" 
-					data-color="Color ${i}" 
-					data-price="${(Math.random() * 10).toFixed(2)}"></div>`
+				<div
+					class="swatch add-to-cart color-${i}"
+					data-color="Color ${i}"
+					data-price="${(Math.random() * 10).toFixed(2)}"
+					style="background-color: ${rgb(i, swatchCount)};"></div>`
 				document.querySelector('.swatches').innerHTML += swatch
+			}
+
+			function rgb(i, total) {
+				const r = 255 * i / 100;
+				const g = 255 * (1 - (i / 100));
+				const b = 255;
+
+				return `rgb(${Math.ceil(r)}, ${Math.ceil(g)}, ${Math.ceil(b)})`;
 			}
 
       const addForm = document.getElementById('add-form')
@@ -195,7 +202,7 @@
 					addToCart(color, price)
 				}
 			}
-			
+
 			document.querySelector('body').addEventListener('click', handleClicks)
 
       const cart = []
@@ -262,17 +269,17 @@
       function showCart() {
         let str = ''
         for (let i = 0; i < cart.length; i += 1) {
-					// Shopping cart list item! 
+					// Shopping cart list item!
           str += `<li>
             <span>
 							<span>${cart[i].name}</span>
-							<span>${cart[i].price}</span> 
+							<span>${cart[i].price}</span>
 							<span>each x</span>
-							<span>${cart[i].qty}</span> 
-							<span> = </span>  
+							<span>${cart[i].qty}</span>
+							<span> = </span>
 							<span>${(cart[i].qty * cart[i].price).toFixed(2)}</span>
 						</span>
-            
+
 						<span>
 							<input class="update" data-name="${cart[i].name}" type="number" value="${cart[i].qty}">
 							<button class="add-one" data-name="${cart[i].name}"> + </button>
@@ -308,6 +315,5 @@
       getTotal()
 
 		</script>
-		
 	</body>
 </html>
